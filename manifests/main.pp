@@ -300,7 +300,7 @@ class make_certificate {
 	$generate_certificate = $config::generate_certificate
 	$files = $config::files
 	if $generate_certificate == "true" {
-		exec { "apt-update":
+		exec { "generate_snakeoil_scert":
 			command   => "/usr/sbin/make-ssl-cert generate-default-snakeoil --force-overwrite",
 			creates   => [ "/etc/ssl/certs/ssl-cert-snakeoil.pem", "/etc/ssl/private/ssl-cert-snakeoil.key" ],
 			require   => Package["ssl-cert"],
