@@ -396,7 +396,7 @@ class configure_webadmin {
 		ensure      => directory,
 	} ->
 	exec { "download_composer":
-		command => "/usr/bin/curl -sS https://getcomposer.org/installer | /usr/bin/php",
+		command => "/usr/bin/curl -sS -O https://getcomposer.org/composer.phar > /tmp/composer.phar",
 		creates => "/tmp/composer.phar",
 		require => Package['php5-fpm'],
 		cwd     => '/tmp',
