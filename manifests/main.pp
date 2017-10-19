@@ -111,7 +111,8 @@ class packages {
 	package { "dovecot-mysql": 			ensure => present }
 	package { "dovecot-sieve": 			ensure => present }
 	package { "dovecot-managesieved": 	ensure => present }
-
+	# Dovecot (pop3)
+	package { "dovecot-pop3d": 			ensure => present }
 	# ssl helpers to make dummy certs
 	package { "ssl-cert": 		ensure => present }
 
@@ -278,6 +279,12 @@ class config_firewall {
 	ufw::allow { 'imaps':
 		port  => 993,
 	}
+	ufw::allow { 'pop3':
+		port  => 110,
+	}
+	ufw::allow { 'pop3s':
+		port  => 995,
+	}
 }
 
 class config_php {
@@ -437,7 +444,7 @@ class configure_webadmin {
 	  line  => "securitysalt=\"$vimbadmin_salt1\"",
 	  match => '^securitysalt.*=.*$',
 	} ->
-	file_line { '2 application.ini':
+	file_line { 'vimbadmin_salt2 application.ini':
 	  path  => '/usr/local/vimbadmin/application/configs/application.ini',
 	  line  => "resources.auth.oss.rememberme.salt=\"$vimbadmin_salt2\"",
 	  match => '^resources.auth.oss.rememberme.salt.*=.*$',
